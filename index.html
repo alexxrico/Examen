@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 7</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="container">
+        <h1>Examen segundo parcial</h1>
+        <p>By: David Alejandro Perez Rico - 320753</p>
+    </header>
+
+    <section>
+        <p id="loading">loading...</p>
+        <p id="error"></p>
+    </section>
+    
+    <article>
+        <section>
+            <ul id="list"></ul>
+        </section>
+    </article>
+    
+    <script>
+        const url = "https://jsonplaceholder.typicode.com/photos";
+        const list = document.getElementById('list');
+
+        const getPhotos = async () => {
+            const response = await fetch(url);
+            const photos = await response.json();
+            return photos;
+        }
+        getPhotos()
+            .then(photos => {
+                photos.map(photo => {
+                    let li = document.createElement('li');
+                    li.innerHTML = `<a href = "detalle.html?id=${photo.id}">${photo.id}</a> ${photo.title}`;
+                    list.appendChild(li);
+                });
+            })                      
+            .catch(error => {
+                document.getElementById('error').innerHTML = error.message;
+                console.log(error);
+            })
+            .finally(() => {
+                document.getElementById('loading').innerHTML = " ";
+                document.getElementById('gif').src = " ";
+                console.log("end");
+            });
+
+
+    </script>
+
+</body>
+</html>
